@@ -101,6 +101,9 @@ module.exports = function(grunt) {
         "  };",
         "});"
       ].join('\n');
+      if(this.data.jshint) {
+        bookmarklet = "/*jshint scripturl:true*/\n" + bookmarklet;
+      }
     }
 
     if(this.data.out) {

@@ -35,7 +35,8 @@ module.exports = function(grunt) {
         css: ['http://static.jquery.com/files/rocker/css/reset.css'],
         body: 'test.js',
         out: 'bookmarklet.js',
-        amdify: true
+        amdify: true,
+        jshint: true
       }
     }
   });

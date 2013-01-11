@@ -1,7 +1,7 @@
 {
   "name": "grunt-bookmarklet-thingy",
   "description": "Add creation of bookmarklets to your grunt build.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/justspamjustin/grunt-bookmarklet-thingy",
   "author": {
     "name": "Justin Martin",
