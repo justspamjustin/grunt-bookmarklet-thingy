@@ -28,6 +28,15 @@ module.exports = function(grunt) {
         es5: true
       },
       globals: {}
+    },
+    bookmarkletThingy: {
+      options: {
+        js: ['http://code.jquery.com/jquery-1.8.1.min.js','http://code.jquery.com/jquery-1.8.3.js'],
+        css: ['http://static.jquery.com/files/rocker/css/reset.css'],
+        body: 'test.js',
+        out: 'bookmarklet.js',
+        amdify: true
+      }
     }
   });
 
@@ -36,5 +45,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', 'lint test');
+
+  grunt.registerTask('bookmarklet', 'bookmarklet-thingy');
 
 };
