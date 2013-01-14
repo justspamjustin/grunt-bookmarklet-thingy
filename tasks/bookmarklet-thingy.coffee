@@ -17,6 +17,7 @@ module.exports = (grunt) ->
   # ==========================================================================
 
   grunt.registerMultiTask "bookmarkletThingy", "Builds a bookmarklet based on your provided source files.", ->
+    timestamp = (if @data.timestamp then " + '?t=' + Date.now()" else '')
 
     getBody = =>
       body = ''
@@ -43,7 +44,7 @@ module.exports = (grunt) ->
           for(var i = 0; i < scriptUrls.length; i++) {
             var url = scriptUrls[i];
             var script = document.createElement('script');
-            script.src = url;
+            script.src = url#{timestamp};
             script.type = 'text/javascript';
             script.onload = scriptLoaded;
             document.body.appendChild(script);
@@ -56,7 +57,7 @@ module.exports = (grunt) ->
           for(var i = 0; i < styleUrls.length; i++) {
             var url = styleUrls[i];
             var link = document.createElement('link');
-            link.href = url;
+            link.href = url#{timestamp};
             link.type = 'text/css';
             link.rel = 'stylesheet';
             link.onload = scriptLoaded;

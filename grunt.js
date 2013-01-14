@@ -36,7 +36,8 @@ module.exports = function(grunt) {
         body: 'test.js',
         out: 'bookmarklet.js',
         amdify: true,
-        jshint: true
+        jshint: true,
+        timestamp: true
       }
     }
   });

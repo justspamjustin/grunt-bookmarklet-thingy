@@ -10,8 +10,9 @@
 
   module.exports = function(grunt) {
     return grunt.registerMultiTask("bookmarkletThingy", "Builds a bookmarklet based on your provided source files.", function() {
-      var amdifyBookmarklet, body, bookmarklet, checkBookmarkletLength, content, getBody, getContent, outputBookmarklet,
+      var amdifyBookmarklet, body, bookmarklet, checkBookmarkletLength, content, getBody, getContent, outputBookmarklet, timestamp,
         _this = this;
+      timestamp = (this.data.timestamp ? " + '?t=' + Date.now()" : '');
       getBody = function() {
         var body;
         body = '';
@@ -31,10 +32,10 @@
           content += "numDependencies += " + _this.data.css.length + ";\n";
         }
         if (_this.data.js) {
-          content += "var scriptUrls = " + (JSON.stringify(_this.data.js)) + ";\nfor(var i = 0; i < scriptUrls.length; i++) {\n  var url = scriptUrls[i];\n  var script = document.createElement('script');\n  script.src = url;\n  script.type = 'text/javascript';\n  script.onload = scriptLoaded;\n  document.body.appendChild(script);\n}";
+          content += "var scriptUrls = " + (JSON.stringify(_this.data.js)) + ";\nfor(var i = 0; i < scriptUrls.length; i++) {\n  var url = scriptUrls[i];\n  var script = document.createElement('script');\n  script.src = url" + timestamp + ";\n  script.type = 'text/javascript';\n  script.onload = scriptLoaded;\n  document.body.appendChild(script);\n}";
         }
         if (_this.data.css) {
-          content += "var styleUrls = " + (JSON.stringify(_this.data.css)) + ";\nfor(var i = 0; i < styleUrls.length; i++) {\n  var url = styleUrls[i];\n  var link = document.createElement('link');\n  link.href = url;\n  link.type = 'text/css';\n  link.rel = 'stylesheet';\n  link.onload = scriptLoaded;\n  document.head.appendChild(link);\n}";
+          content += "var styleUrls = " + (JSON.stringify(_this.data.css)) + ";\nfor(var i = 0; i < styleUrls.length; i++) {\n  var url = styleUrls[i];\n  var link = document.createElement('link');\n  link.href = url" + timestamp + ";\n  link.type = 'text/css';\n  link.rel = 'stylesheet';\n  link.onload = scriptLoaded;\n  document.head.appendChild(link);\n}";
         }
         content += "function scriptLoaded() {\n  loadedDependencies++;\n  if(numDependencies === loadedDependencies) {\n    afterDepsLoaded();\n  }\n}\nfunction afterDepsLoaded() {\n" + body + "\n}";
         if (_this.data.js && _this.data.css) {
