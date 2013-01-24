@@ -9,7 +9,7 @@
   bookmarkletWarnLength = 2000;
 
   module.exports = function(grunt) {
-    return grunt.registerMultiTask("bookmarkletThingy", "Builds a bookmarklet based on your provided source files.", function() {
+    return grunt.registerMultiTask("bookmarklet", "Builds a bookmarklet based on your provided source files.", function() {
       var amdifyBookmarklet, body, bookmarklet, checkBookmarkletLength, content, getBody, getContent, outputBookmarklet, timestamp,
         _this = this;
       timestamp = (this.data.timestamp ? " + '?t=' + Date.now()" : '');

@@ -29,7 +29,7 @@ module.exports = function(grunt) {
       },
       globals: {}
     },
-    bookmarkletThingy: {
+    bookmarklet: {
       options: {
         js: ['http://code.jquery.com/jquery-1.8.1.min.js','http://code.jquery.com/jquery-1.8.3.js'],
         css: ['http://static.jquery.com/files/rocker/css/reset.css'],
@@ -47,7 +47,5 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', 'lint test');
-
-  grunt.registerTask('bookmarklet', 'bookmarklet-thingy');
 
 };
