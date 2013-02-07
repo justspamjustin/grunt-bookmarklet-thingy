@@ -16,8 +16,11 @@ module.exports = (grunt) ->
   # TASKS
   # ==========================================================================
 
-  grunt.registerMultiTask "bookmarkletThingy", "Builds a bookmarklet based on your provided source files.", ->
+  grunt.registerMultiTask "bookmarklet", "Builds a bookmarklet based on your provided source files.", ->
     timestamp = (if @data.timestamp then " + '?t=' + Date.now()" else '')
+    # Use a macro for __HOST__
+    hostMacro = '__HOST__'
+    host = (if @data.host && @data.amdify then "'http://' + '" + hostMacro + "' + " else '')
 
     getBody = =>
       body = ''
@@ -44,7 +47,7 @@ module.exports = (grunt) ->
           for(var i = 0; i < scriptUrls.length; i++) {
             var url = scriptUrls[i];
             var script = document.createElement('script');
-            script.src = url#{timestamp};
+            script.src = #{host}url#{timestamp};
             script.type = 'text/javascript';
             script.onload = scriptLoaded;
             document.body.appendChild(script);
@@ -57,7 +60,7 @@ module.exports = (grunt) ->
           for(var i = 0; i < styleUrls.length; i++) {
             var url = styleUrls[i];
             var link = document.createElement('link');
-            link.href = url#{timestamp};
+            link.href = #{host}url#{timestamp};
             link.type = 'text/css';
             link.rel = 'stylesheet';
             link.onload = scriptLoaded;
@@ -89,10 +92,12 @@ module.exports = (grunt) ->
 
     amdifyBookmarklet = (bookmarklet) =>
       if @data.amdify
+        hostParam = (if @data.host then 'host' else '')
+        bookmarklet = bookmarklet.replace(new RegExp(hostMacro,'g'),"' + host + '")
         bookmarklet = """
           define([],function() {
             return {
-              getBookmarklet: function() {
+              getBookmarklet: function(#{hostParam}) {
                 return '#{bookmarklet}';
               }
             };
