@@ -95,10 +95,10 @@ module.exports = (grunt) ->
         hostParam = (if @data.host then 'host' else '')
         bookmarklet = bookmarklet.replace(new RegExp(hostMacro,'g'),"' + host + '")
         bookmarklet = """
-          define([],function() {
+          define([], function () {
             #{if @data.jshint then "'use strict';" else ""}
             return {
-              getBookmarklet: function(#{hostParam}) {
+              getBookmarklet: function (#{hostParam}) {
                 return '#{bookmarklet}';
               }
             };

@@ -59,7 +59,7 @@
         if (_this.data.amdify) {
           hostParam = (_this.data.host ? 'host' : '');
           bookmarklet = bookmarklet.replace(new RegExp(hostMacro, 'g'), "' + host + '");
-          bookmarklet = "define([],function() {\n  " + (_this.data.jshint ? "'use strict';" : "") + "\n  return {\n    getBookmarklet: function(" + hostParam + ") {\n      return '" + bookmarklet + "';\n    }\n  };\n});";
+          bookmarklet = "define([], function () {\n  " + (_this.data.jshint ? "'use strict';" : "") + "\n  return {\n    getBookmarklet: function (" + hostParam + ") {\n      return '" + bookmarklet + "';\n    }\n  };\n});";
           if (_this.data.jshint) {
             bookmarklet = "/*jshint scripturl:true*/\n" + bookmarklet;
           }
