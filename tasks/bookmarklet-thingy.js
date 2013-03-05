@@ -34,10 +34,28 @@
           content += "numDependencies += " + _this.data.css.length + ";\n";
         }
         if (_this.data.js) {
-          content += "var scriptUrls = " + (JSON.stringify(_this.data.js)) + ";\nfor(var i = 0; i < scriptUrls.length; i++) {\n  var url = scriptUrls[i];\n  var script = document.createElement('script');\n  script.src = " + host + "url" + timestamp + ";\n  script.type = 'text/javascript';\n  script.onload = scriptLoaded;\n  document.body.appendChild(script);\n}";
+          content += "var scriptUrls = " + (JSON.stringify(_this.data.js)) + ";\n" + ((function() {
+            if (this.data.jsIds) {
+              if (this.data.jsIds.length !== this.data.js.length) {
+                throw new Error("You must provide the same number of IDs as scripts");
+              }
+              return "var scriptIds = " + (JSON.stringify(this.data.jsIds)) + ";";
+            } else {
+              return "";
+            }
+          }).call(_this)) + "\nfor(var i = 0; i < scriptUrls.length; i++) {\n  var url = scriptUrls[i];\n  var script = document.createElement('script');\n  script.src = " + host + "url" + timestamp + ";\n  " + (_this.data.jsIds ? "script.id = scriptIds[i];" : "") + "\n  script.type = 'text/javascript';\n  script.onload = scriptLoaded;\n  document.body.appendChild(script);\n}";
         }
         if (_this.data.css) {
-          content += "var styleUrls = " + (JSON.stringify(_this.data.css)) + ";\nfor(var i = 0; i < styleUrls.length; i++) {\n  var url = styleUrls[i];\n  var link = document.createElement('link');\n  link.href = " + host + "url" + timestamp + ";\n  link.type = 'text/css';\n  link.rel = 'stylesheet';\n  link.onload = scriptLoaded;\n  document.head.appendChild(link);\n}";
+          content += "var styleUrls = " + (JSON.stringify(_this.data.css)) + ";\n" + ((function() {
+            if (this.data.cssIds) {
+              if (this.data.cssIds.length !== this.data.css.length) {
+                throw new Error("You must provide the same number of IDs as css");
+              }
+              return "var styleIds = " + (JSON.stringify(this.data.cssIds)) + ";";
+            } else {
+              return "";
+            }
+          }).call(_this)) + "\nfor(var i = 0; i < styleUrls.length; i++) {\n  var url = styleUrls[i];\n  var link = document.createElement('link');\n  link.href = " + host + "url" + timestamp + ";\n  " + (_this.data.cssIds ? "link.id = styleIds[i];" : "") + "\n  link.type = 'text/css';\n  link.rel = 'stylesheet';\n  link.onload = scriptLoaded;\n  document.head.appendChild(link);\n}";
         }
         content += "function scriptLoaded() {\n  loadedDependencies++;\n  if(numDependencies === loadedDependencies) {\n    afterDepsLoaded();\n  }\n}\nfunction afterDepsLoaded() {\n" + body + "\n}";
         if (_this.data.js && _this.data.css) {

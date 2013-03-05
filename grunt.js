@@ -32,6 +32,7 @@ module.exports = function(grunt) {
     bookmarklet: {
       options: {
         js: ['http://code.jquery.com/jquery-1.8.1.min.js','http://code.jquery.com/jquery-1.8.3.js'],
+        jsIds: ['jquery-min','jquery'],
         css: ['http://static.jquery.com/files/rocker/css/reset.css'],
         body: 'test.js',
         out: 'bookmarklet.js',

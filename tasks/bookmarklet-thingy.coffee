@@ -44,10 +44,18 @@ module.exports = (grunt) ->
       if @data.js
         content += """
           var scriptUrls = #{JSON.stringify(@data.js)};
+          #{
+              if @data.jsIds
+                if @data.jsIds.length isnt @data.js.length then throw new Error("You must provide the same number of IDs as scripts")
+                "var scriptIds = #{JSON.stringify(@data.jsIds)};"
+              else
+                ""
+          }
           for(var i = 0; i < scriptUrls.length; i++) {
             var url = scriptUrls[i];
             var script = document.createElement('script');
             script.src = #{host}url#{timestamp};
+            #{if @data.jsIds then "script.id = scriptIds[i];" else ""}
             script.type = 'text/javascript';
             script.onload = scriptLoaded;
             document.body.appendChild(script);
@@ -57,10 +65,18 @@ module.exports = (grunt) ->
       if(@data.css)
         content += """
           var styleUrls = #{JSON.stringify(@data.css)};
+          #{
+              if @data.cssIds
+                if @data.cssIds.length isnt @data.css.length then throw new Error("You must provide the same number of IDs as css")
+                "var styleIds = #{JSON.stringify(@data.cssIds)};"
+              else
+                ""
+          }
           for(var i = 0; i < styleUrls.length; i++) {
             var url = styleUrls[i];
             var link = document.createElement('link');
             link.href = #{host}url#{timestamp};
+            #{if @data.cssIds then "link.id = styleIds[i];" else ""}
             link.type = 'text/css';
             link.rel = 'stylesheet';
             link.onload = scriptLoaded;
