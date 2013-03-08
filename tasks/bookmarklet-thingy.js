@@ -14,7 +14,7 @@
         _this = this;
       timestamp = (this.data.timestamp ? " + '?t=' + Date.now()" : '');
       hostMacro = '__HOST__';
-      host = (this.data.host && this.data.amdify ? "'http://' + '" + hostMacro + "' + " : '');
+      host = (this.data.host && this.data.amdify ? "'" + hostMacro + "' + " : '');
       getBody = function() {
         var body;
         body = '';

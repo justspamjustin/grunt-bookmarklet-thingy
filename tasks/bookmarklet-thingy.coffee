@@ -20,7 +20,7 @@ module.exports = (grunt) ->
     timestamp = (if @data.timestamp then " + '?t=' + Date.now()" else '')
     # Use a macro for __HOST__
     hostMacro = '__HOST__'
-    host = (if @data.host && @data.amdify then "'http://' + '" + hostMacro + "' + " else '')
+    host = (if @data.host && @data.amdify then "'" + hostMacro + "' + " else '')
 
     getBody = =>
       body = ''
